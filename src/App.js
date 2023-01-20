@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import Board from "./components/board";
+import Selector from "./components/selector";
+import styled from "styled-components";
 
 function App() {
+  const [pixels, setPixels] = useState(8);
+  const [color, setColor] = useState("#2196f3");
+  const [drawing, setDrawing] = useState(true);
+
+  useEffect(() => {
+    setDrawing(true);
+  }, [drawing]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Wrapper>
+      <Selector
+        setPixels={setPixels}
+        color
+        setColor={setColor}
+        drawing
+        setDrawing={setDrawing}
+      />
+      {drawing ? (
+        <Board pixels={pixels} setPixels={setPixels} color={color} />
+      ) : null}
+    </Wrapper>
   );
 }
+
+const Wrapper = styled.section`
+  padding: 40px;
+  display: flex;
+  gap: 20px;
+`;
 
 export default App;
